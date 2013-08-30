@@ -137,38 +137,40 @@ const CGFloat kBlackoutViewFadeInOpacity = 0.6;
     
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.frame.size.width, self.frame.size.height), YES, 0);
     CGContextRef con = UIGraphicsGetCurrentContext();
-    
+
     // Fill the context
     UIColor *fillColor = [UIColor colorWithRed:18/255.0 green:18/255.0 blue:18/255.0 alpha:1];
     CGContextSetFillColorWithColor(con, fillColor.CGColor);
     CGContextFillRect(con, CGRectMake(0, 0, self.frame.size.width, self.frame.size.height));
     
     // Draw gradient
-    [backgroundImage drawInRect:CGRectMake(0, 0, self.frame.size.width, backgroundImage.size.height)];
-    
-    // Draw Line
-    CGFloat lineYAxis = self.frame.size.height - (kButtonPadding * 2 + kButtonHeight);
-    
-    CGContextBeginPath(con);
-    CGContextSetStrokeColorWithColor(con, [UIColor blackColor].CGColor);
-    CGContextSetLineWidth(con, 1);
-    CGContextMoveToPoint(con, 0, lineYAxis);
-    CGContextAddLineToPoint(con, self.frame.size.width, lineYAxis);
-    CGContextStrokePath(con);
-    
-    CGContextBeginPath(con);
-    UIColor *strokeColor = [UIColor colorWithRed:42/255.0 green:45/255.0 blue:48/255.0 alpha:1];
-    CGContextSetStrokeColorWithColor(con, strokeColor.CGColor);
-    CGContextSetLineWidth(con, 1);
-    CGContextMoveToPoint(con, 0, lineYAxis + 1);
-    CGContextAddLineToPoint(con, self.frame.size.width, lineYAxis + 1);
-    CGContextStrokePath(con);
-    
+    [backgroundImage drawInRect:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+//
+//    // Draw Line
+//    CGFloat lineYAxis = self.frame.size.height - (kButtonPadding * 2 + kButtonHeight);
+//    
+//    CGContextBeginPath(con);
+//    CGContextSetStrokeColorWithColor(con, [UIColor blackColor].CGColor);
+//    CGContextSetLineWidth(con, 1);
+//    CGContextMoveToPoint(con, 0, lineYAxis);
+//    CGContextAddLineToPoint(con, self.frame.size.width, lineYAxis);
+//    CGContextStrokePath(con);
+//    
+//    CGContextBeginPath(con);
+//    UIColor *strokeColor = [UIColor colorWithRed:42/255.0 green:45/255.0 blue:48/255.0 alpha:1];
+//    CGContextSetStrokeColorWithColor(con, strokeColor.CGColor);
+//    CGContextSetLineWidth(con, 1);
+//    CGContextMoveToPoint(con, 0, lineYAxis + 1);
+//    CGContextAddLineToPoint(con, self.frame.size.width, lineYAxis + 1);
+//    CGContextStrokePath(con);
+//    
     UIImage *finishedBackground = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+
     UIImageView *background = [[UIImageView alloc] initWithImage:finishedBackground];
-    background.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    background.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    background.contentMode = UIViewContentModeScaleAspectFill;
+    [background setFrame:self.bounds];
     [self insertSubview:background atIndex:0];
 }
 
@@ -245,8 +247,8 @@ const CGFloat kBlackoutViewFadeInOpacity = 0.6;
     label.numberOfLines = 0;
     label.text = title;
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor whiteColor];
-    label.shadowColor = [UIColor colorWithWhite:0 alpha:0.5];
+    label.textColor = [UIColor darkGrayColor];
+    label.shadowColor = [UIColor colorWithWhite:1.f alpha:0.5];
     label.shadowOffset = CGSizeMake(0.0, -1.0);
     
     return label;
@@ -260,8 +262,8 @@ const CGFloat kBlackoutViewFadeInOpacity = 0.6;
     button.accessibilityLabel = title;
     button.opaque = YES;
     
-    [button.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-    UIColor *titleColor = [UIColor colorWithRed:18/255.0 green:22/255.0 blue:26/255.0 alpha:1];
+    [button.titleLabel setFont:[UIFont systemFontOfSize:16]];
+    UIColor *titleColor = [UIColor colorWithRed:18/255.0 green:22/255.0 blue:26/255.0 alpha:0.7f];
     [button setTitleColor:titleColor forState:UIControlStateNormal];
     
     UIImage *backgroundImage = [[UIImage imageNamed:@"SheetButtonGeneric.png"] stretchableImageWithLeftCapWidth:9 topCapHeight:1];
